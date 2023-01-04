@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 
 function GroupExample() {
   return (
-    <Card style={{ width: '18rem', marginLeft:"20%" }}>
+    <Card style={{ width: '18rem', marginLeft:"20%"}}>
     <Card.Body>
       <Card.Title style={{color:'#00b7ff'}}>Furniture customize</Card.Title>
       <Card.Text>

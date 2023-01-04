@@ -9,7 +9,7 @@ function Feature() {
     <div id='features' className='app__bg'>
       <div className='a-container'>
           <FeatureBox image={featureimage} title='Customization'></FeatureBox>
-          <FeatureBox image={featureimage2} title='Earn Money'></FeatureBox>
+          <FeatureBox image={featureimage2} title='Find Jobs'></FeatureBox>
           <FeatureBox image={featureimage3} title='Shopping'></FeatureBox>
       </div>
     </div>

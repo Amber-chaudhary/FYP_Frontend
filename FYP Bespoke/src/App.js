@@ -1,8 +1,19 @@
 import React from 'react';
 import Home from './Pages/Home';
-import EarnMoney from './Pages/EarnMoney';
+import FindJobs from './Pages/FindJobs';
 import Navbar from './Components/Navbar';
 import Shop from './Pages/Shop';
+import Spinner from 'react-spinkit';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+  Navigate,
+} from "react-router-dom";
+
+
+
 
 function App() {
 
@@ -13,8 +24,8 @@ function App() {
     component = <Home />
     break
 
-    case"/EarnMoney":
-    component = <EarnMoney />
+    case"/FindJobs":
+    component = <FindJobs />
     break
 
     case"/Shop":
@@ -24,11 +35,12 @@ function App() {
 
 
   return (
-    <div className="App">
+    <div className="App">  
       <Navbar></Navbar>
       {component}
-     
-      
+      <div className={'loadinganim'} id="#interceptor">
+            <Spinner name="three-bounce"  style={{color:"#36d7b7",marginTop:'25%',left:'50%',position:'absolute',zIndex:'99999',opacity: 2}} />
+      </div>
     </div>
       
   );

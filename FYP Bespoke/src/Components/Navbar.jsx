@@ -6,6 +6,12 @@ import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import logo2 from '../images/Logo2.png';
 import Post from '../Pages/Post';
+import authServices from '../Services/AuthServices';
+import axios from 'axios';
+import * as Icon from 'react-bootstrap-icons';
+import { ArrowRight } from 'react-bootstrap-icons';
+import { BoxArrowInRight } from 'react-bootstrap-icons';
+
 
 
 function Navbar() {
@@ -39,7 +45,7 @@ function Navbar() {
   //radio button
 
   const [form,setForm]=useState()
- const handleForm=(e)=>{
+  const handleForm=(e)=>{
     setForm(e.target.name)
  }
  const [sellerState,setSellerState] = useState(false)
@@ -69,32 +75,54 @@ function Navbar() {
       const SetFlag =()=>{
         SetFlag(true)
       }
+
+      const handleLoginForm = (event) => {
+        event.preventDefault();
+        const data = Object.fromEntries(new FormData(event.target));
+        console.log(event.target[0].value)
+        console.log(event.target[1].value)
+        authServices.login(event.target[0].value,event.target[1].value).
+        then(res=>{
+          console.log(res)
+        })
+        .catch()
+
+      }
+
   return (
       <>
     <nav className={nav ? 'nav active' : 'nav'}>
       <a href='#' className='logo'>
           <img src={logo2} alt=''/>
       </a>
-      <ul className='menu'>
+      <ul className='menu' style={{display:'flex',alignItems:"center"}}>
+        {authServices.isLogged() ? (<>
           <li><a href='/' >Home</a></li>
           <li><a onClick={handleShowPost} style={{color:'#E3BE00'}}>Post Order</a></li>
-          <li ><a href='/EarnMoney'className='active' >Earn Money</a></li>
-          <li><a href='Shop'>Shop</a></li>
+          <li ><a href='/FindJobs'>Find Job</a></li>
+          <li><a href='/Shop'>Shop</a></li>
+          <li><BoxArrowInRight color="royalblue" style={{cursor:"pointer"}} size={30} onClick={()=>{
+            authServices.logOut()a
+          }} /></li>
+        </>) : (<>
           <li><a onClick={handleShow} style={{color:'#E3BE00'}}>Login</a></li>
-          <a className='nav-btn' onClick={handleLogin} >Register</a>
+          <a className='nav-btn' style={{borderRadius:2,marginTop:2}} onClick={handleLogin} >Register</a>
+          {/* className='active'  */}  
+        </>)}    
       </ul>
     </nav>
 
 {/* login modal */}
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton style={{color:'#00b7ff'}}>
-          <Modal.Title>Login</Modal.Title>
+          <Modal.Title>Login here</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleLoginForm}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Email address</Form.Label>
               <Form.Control
+                name='Email'
                 type="email"
                 placeholder="name@example.com"
                 autoFocus
@@ -106,19 +134,20 @@ function Navbar() {
             >
               <Form.Label>Password</Form.Label>
               <Form.Control type="password"
+                name='password'
                 placeholder="*****"
                 autoFocus />
             </Form.Group>
+            <Button variant="primary" type='submit' style={{backgroundColor:'#00b7ff', color:'#ffffff'}}>
+            Login
+          </Button>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleClose} style={{backgroundColor:'#00b7ff', color:'#ffffff'}}>
-            Login
-          </Button>
         </Modal.Footer>
       </Modal>
 
-      {/* Registration popup */}
+      {/* Registration form  */}
 
       <Modal show={login} onHide={handleCloseLogin}>
         <Modal.Header closeButton style={{color:'#00b7ff'}}>
@@ -343,8 +372,6 @@ function Navbar() {
           </Button>
         </Modal.Footer>
       </Modal>
-
-
 
 
 
